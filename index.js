@@ -16,13 +16,19 @@ import helmet from "helmet";
 dotenv.config();
 const app = express();
 
+app.use(
+  cors({
+    origin: process.env.FRONTEND_URL,
+    credentials: true,
+  })
+);
+
 const server = http.createServer(app);
 const io = new Server(server, {
   cors: {
     origin: process.env.FRONTEND_URL,
     methods: ["GET", "POST"],
     credentials: true,
-    allowedHeaders: ["my-custom-header"],
   },
   allowEIO3: true,
 });
@@ -37,11 +43,6 @@ app.use(helmet());
 app.use(
   "/uploads/profiles",
   express.static(path.join(process.cwd(), "src/uploads/profiles"))
-);
-app.use(
-  cors({
-    origin: process.env.FRONTEND_URL,
-  })
 );
 
 app.use(cookieParser());
