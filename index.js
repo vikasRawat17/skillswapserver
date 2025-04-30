@@ -22,7 +22,9 @@ const io = new Server(server, {
     origin: process.env.FRONTEND_URL,
     methods: ["GET", "POST"],
     credentials: true,
+    allowedHeaders: ["my-custom-header"],
   },
+  allowEIO3: true,
 });
 
 const limiter = rateLimit({
